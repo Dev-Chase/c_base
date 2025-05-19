@@ -1,6 +1,5 @@
 # Folders
 INCLUDE :=  include
-COMMANDS := commands
 OBJ :=  obj
 SRC :=  src
 BIN :=  bin
@@ -43,18 +42,15 @@ CFLAGS := $(INCLUDES_FLAG) -std=$(STD) -g -Wall -Wextra
 # Files
 LIBS := $(wildcard $(patsubst %,%/*, $(LIBDIRS)))
 INCLUDES := $(wildcard $(patsubst %,%/*, $(INCLUDEDIRS)))
-#SRCS := $(wildcard $(patsubst %,%/*.c,$(SRCDIRS)))
-SRCS := $(wildcard $(SRC)/*.c)
+SRCS := $(wildcard $(patsubst %,%/*.c,$(SRCDIRS)))
 OBJS := $(patsubst $(SRC)/%,$(OBJ)/%,$(SRCS:.c=.o))
-JSONS := $(patsubst $(SRC)/%.c,$(COMMANDS)/%.json,$(SRCS))
-# JSONS := $(patsubst $(SRC_DIR)/%.c,$(COMMANDS)/%.json,$(SRCS))
-DB := compile_commands.json
+# SRCS := $(wildcard $(SRC)/*.c)
 
 # $(info SRCDIRS = [${SRCDIRS}])
 # $(info SRCS = [${SRCS}])
 # $(info JSONS = [${JSONS}])
 
-.PHONY: all clean clean-json $(DB)
+.PHONY: all clean clean-json
 
 # Main Commands & "Routing"
 all: $(BIN) $(MAIN_BIN)
@@ -62,9 +58,6 @@ all: $(BIN) $(MAIN_BIN)
 
 $(BIN):
 	$(MD) $(BIN)
-
-$(COMMANDS):
-	$(MD) $(COMMANDS)
 
 run: all
 	$(MAIN_BIN)
@@ -87,24 +80,16 @@ $(MAIN_BIN): $(OBJS) $(LIBS)
 	@echo "Linking → $@"
 	$(CC) $(CFLAGS) $^ -o $@
 
-# 4. Generate per-file JSON entries in one go alongside .o builds
-$(COMMANDS)/%.json: $(SRC)/%.c | $(COMMANDS)
-	@echo "Generating JSON entry for $<"
-	$(CC) $(CFLAGS) -MJ $@ -c $< -o /dev/null
-
-# 5. Merge all JSON snippets into compile_commands.json ($(DB))
-$(DB): $(JSONS)
-	@echo "Merging JSON snippets -> $@"
-	@echo "[" > $@
-	@find $(COMMANDS) -type f -name '*.json' -exec cat {} \; | sed '$$ s/,\s*$$//' >> $@
-	@echo "]" >> $@
-
 # For if bear actually works
 bear-make:
 	make clean; bear -- make
 
+# Creating compile_commands.json w/ compiledb
+lsp-info:
+	make clean; compiledb -n make
+
+lsp-info-build:
+	make clean; compiledb make
+
 clean:
 	rm -rf *.dSYM $(OBJ)/* $(BIN)/*
-
-clean-json:
-	@rm -rf $(COMMANDS)/*.json $(DB)

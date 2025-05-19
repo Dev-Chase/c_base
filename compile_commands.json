@@ -1,3 +1,34 @@
 [
-{ "directory": "/Users/chase/Coding/C/c_base", "file": "src/main.c", "output": "/dev/null", "arguments": ["/opt/homebrew/Cellar/llvm/20.1.5/bin/clang-20", "-xc", "src/main.c", "-o", "/dev/null", "--sysroot=/Library/Developer/CommandLineTools/SDKs/MacOSX15.sdk", "-I", "include", "-std=c11", "-g", "-Wall", "-Wextra", "-c", "-mlinker-version=1167.4.1", "-mmacos-version-min=15.0.0", "--target=arm64-apple-macosx15.0.0"]}
+ {
+  "directory": "/Users/chase/Coding/C/c_base",
+  "arguments": [
+   "clang",
+   "-Iinclude",
+   "-std=c11",
+   "-g",
+   "-Wall",
+   "-Wextra",
+   "-c",
+   "src/main.c",
+   "-o",
+   "obj/main.o"
+  ],
+  "file": "src/main.c"
+ },
+ {
+  "directory": "/Users/chase/Coding/C/c_base",
+  "arguments": [
+   "clang",
+   "-Iinclude",
+   "-std=c11",
+   "-g",
+   "-Wall",
+   "-Wextra",
+   "-c",
+   "src/test.c",
+   "-o",
+   "obj/test.o"
+  ],
+  "file": "src/test.c"
+ }
 ]
