@@ -85,13 +85,16 @@ bear-make:
 	make clean; bear -- make
 
 # Creating compile_commands.json w/ compiledb
-lsp-info: clean
+lsp-info: clean clean-json
 	@echo "Dry-Generating compile_commands.json"
 	@compiledb -n make
 
-lsp-info-build: clean
+lsp-info-build: clean clean-json
 	@echo "Building & Creating compile_commands.json"
 	@compiledb make
 
 clean:
 	rm -rf *.dSYM $(OBJ)/* $(BIN)/*
+
+clean-json:
+	rm compile_commands.json
