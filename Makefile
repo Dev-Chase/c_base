@@ -50,7 +50,7 @@ OBJS := $(patsubst $(SRC)/%,$(OBJ)/%,$(SRCS:.c=.o))
 # $(info SRCS = [${SRCS}])
 # $(info JSONS = [${JSONS}])
 
-.PHONY: all clean clean-json
+.PHONY: all clean
 
 # Main Commands & "Routing"
 all: $(BIN) $(MAIN_BIN)
@@ -58,6 +58,7 @@ all: $(BIN) $(MAIN_BIN)
 
 $(BIN):
 	$(MD) $(BIN)
+	$(MAKE) lsp-info
 
 run: all
 	$(MAIN_BIN)
@@ -85,16 +86,17 @@ bear-make:
 	make clean; bear -- make
 
 # Creating compile_commands.json w/ compiledb
-lsp-info: clean clean-json
-	@echo "Dry-Generating compile_commands.json"
-	@compiledb -n make
+lsp-info-warning:
+	@echo "NOTE: This should only be run once, at the beginning of the project"
+	@echo "If it is needed to run it again, ensure to remove all but the json for the main binary"
 
-lsp-info-build: clean clean-json
+lsp-info: clean lsp-info-warning
+	@echo "Dry-Generating compile_commands.json"
+	@compiledb -n --overwrite make
+
+lsp-info-build: clean lsp-info-warning
 	@echo "Building & Creating compile_commands.json"
-	@compiledb make
+	@compiledb --overwrite make
 
 clean:
 	rm -rf *.dSYM $(OBJ)/* $(BIN)/*
-
-clean-json:
-	rm compile_commands.json
