@@ -86,15 +86,11 @@ bear-make:
 	make clean; bear -- make
 
 # Creating compile_commands.json w/ compiledb
-lsp-info-warning:
-	@echo "NOTE: This should only be run once, at the beginning of the project"
-	@echo "If it is needed to run it again, ensure to remove all but the json for the main binary"
-
-lsp-info: clean lsp-info-warning
+lsp-info: clean
 	@echo "Dry-Generating compile_commands.json"
 	@compiledb -n --overwrite make
 
-lsp-info-build: clean lsp-info-warning
+lsp-info-build: clean
 	@echo "Building & Creating compile_commands.json"
 	@compiledb --overwrite make
 
