@@ -37,7 +37,8 @@ MAIN_BIN := $(BIN)/$(MAIN)
 INCLUDES_FLAG := $(patsubst %,-I%,$(INCLUDEDIRS:%/=%))
 STD := c11
 CC := clang
-CFLAGS := $(INCLUDES_FLAG) -std=$(STD) -g -Wall -Wextra
+CFLAGS += $(INCLUDES_FLAG) -std=$(STD) -g -Wall -Wextra
+LDLIBS :=
 
 # Files
 LIBS := $(wildcard $(patsubst %,%/*, $(LIBDIRS)))
@@ -79,7 +80,7 @@ $(OBJ)/$(MAIN).o: $(MAIN_SRC) $(INCLUDES) | $(OBJDIRS)
 # 3. Link the executable
 $(MAIN_BIN): $(OBJS) $(LIBS)
 	@echo "Linking → $@"
-	$(CC) $(CFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $^ -o $@ $(LDLIBS) $(LDFLAGS)
 
 # For if bear actually works
 bear-make:
