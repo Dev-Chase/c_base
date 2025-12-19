@@ -1,34 +1,25 @@
 [
- {
-  "directory": "/Users/chase/Coding/C/c_base",
-  "arguments": [
-   "clang",
-   "-Iinclude",
-   "-std=c11",
-   "-g",
-   "-Wall",
-   "-Wextra",
-   "-c",
-   "src/main.c",
-   "-o",
-   "obj/main.o"
-  ],
-  "file": "src/main.c"
- },
- {
-  "directory": "/Users/chase/Coding/C/c_base",
-  "arguments": [
-   "clang",
-   "-Iinclude",
-   "-std=c11",
-   "-g",
-   "-Wall",
-   "-Wextra",
-   "-c",
-   "src/test.c",
-   "-o",
-   "obj/test.o"
-  ],
-  "file": "src/test.c"
- }
+  {
+    "arguments": [
+      "/opt/homebrew/opt/llvm/bin/clang",
+      "-I/opt/homebrew/include",
+      "-Iinclude",
+      "-std=c11",
+      "-g",
+      "-Wall",
+      "-Wextra",
+      "-Iinclude",
+      "-std=c11",
+      "-g",
+      "-Wall",
+      "-Wextra",
+      "-c",
+      "-o",
+      "obj/main.o",
+      "src/main.c"
+    ],
+    "directory": "/Users/chase/Coding/C/c_base",
+    "file": "/Users/chase/Coding/C/c_base/src/main.c",
+    "output": "/Users/chase/Coding/C/c_base/obj/main.o"
+  }
 ]
